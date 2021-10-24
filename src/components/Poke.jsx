@@ -11,6 +11,8 @@ const Poke = () => {
     const [pokeData, loading] = useGet({ url: api });
     const [namePoke, setNamePoke] = useState("");
     const [pokeFilter, setPokeFilter] = useState([]);
+    const [error, setError] =  useState(false);
+    const [message, setMessage] = useState("");
   
 
     const handlerInput = (e) => {
@@ -20,12 +22,23 @@ const Poke = () => {
     
     const searchPoke = (e) => {
         
-        let pokemon = pokeData.filter((poke) => poke.name === namePoke);
-        setPokeFilter(pokemon);
-        
-        console.log(pokeData)
         e.preventDefault();
         e.target.reset();
+        let pokemon = pokeData.filter((poke) => poke.name === namePoke);
+        setPokeFilter(pokemon);
+        setError(false);
+        if(!namePoke.trim()){
+            setError(true);
+            setMessage('* Ingresa el nombre del Pokemon!');
+            return
+        };
+        if (pokemon.length === 0){
+            setError(true);
+            setMessage('* El pokemon no existe!');
+            return
+        }
+                
+        
 
     }
 
@@ -44,7 +57,13 @@ const Poke = () => {
                         </form>
                     </div>
                 </div>
-
+                {
+                    error ? (
+                        <span className="text-danger text-small d-block mb-2">{message}</span>
+                    ) : (
+                        <span></span>
+                    )
+                }
                 {
                     loading ? (<Loader />) :
                     (
