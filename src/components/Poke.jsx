@@ -27,7 +27,7 @@ const Poke = () => {
         let pokemon = pokeData.filter((poke) => poke.name === namePoke);
         setPokeFilter(pokemon);
         setError(false);
-        if (!namePoke.trim()) {
+        if (!namePoke) {
             setError(true);
             setMessage('* Ingresa el nombre del Pokemon!');
             return
@@ -60,11 +60,11 @@ const Poke = () => {
                 {
                     error ? (
                         <div className="row">
-                        <div className="col-12 mt-5 d-flex justify-content-center">
-                        <div class="alert" role="alert">
-                            {message}
-                        </div>
-                        </div>
+                            <div className="col-12 mt-5 d-flex justify-content-center">
+                                <div className="alert" role="alert">
+                                    {message}
+                                </div>
+                            </div>
                         </div>
                     ) : (
                         <span></span>
